@@ -1,17 +1,17 @@
 import { Button, Container, Grid, Paper, TextField, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import CheckOutDetails from '../components/CheckOutDetails';
-import { GetFood } from '../context/foodContext';
+// import { GetFood } from '../context/foodContext';
 
 const CheckOut = () => {
-    const { address, setAddress } = GetFood();
+    const [address, setAddress] = useState({});
     const blurHandler = e => {
         const deliveryDetails = { ...address }
         deliveryDetails[e.target.name] = e.target.value;
         setAddress(deliveryDetails)
     }
 
-    console.log(address);
+    // console.log(address);
     const deliveryAddressHandler = () => {
 
     }

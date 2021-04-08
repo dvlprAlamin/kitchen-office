@@ -20,21 +20,11 @@ const Home = () => {
     const dispatch = useDispatch()
     const getFoods = useSelector((state) => state.foodsByCategory);
     const { foodsByCategory, loading, error } = getFoods;
-    console.log(getFoods);
-    // const [selectedFood, setSelectedFood] = useState(foods.filter(food => food.category === 'Lunch'))
 
-    const [category, setCategory] = useState('Lunch');
-    // useEffect(() => {
-    //     dispatch(fetchFoods());
-    // }, [dispatch])
+    const [category, setCategory] = useState('Breakfast');
     useEffect(() => {
         dispatch(fetchFoodsByCategory(category));
     }, [dispatch, category])
-
-
-    // const filterFoods = category => {
-    //     setSelectedFood(foods.filter(food => food.category === category))
-    // }
     return (
         <Container>
             {
@@ -44,7 +34,7 @@ const Home = () => {
                         <>
                             <Grid container style={{ margin: '25px 0' }} justify="center">
                                 <Grid item>
-                                    <Button onClick={() => setCategory('Breakfast')} variant="text"><span className={filterBtn} >Breakfast</span> </Button>
+                                    <Button onClick={() => setCategory('Breakfast')} variant="text"><span className={filterBtn}>Breakfast</span> </Button>
                                     <Button onClick={() => setCategory('Lunch')} variant="text"><span className={filterBtn} >Lunch</span> </Button>
                                     <Button onClick={() => setCategory('Dinner')} variant="text"><span className={filterBtn} >Dinner</span> </Button>
                                 </Grid>
@@ -52,7 +42,7 @@ const Home = () => {
                             <Grid container spacing={3} justify="center">
                                 {foodsByCategory.map(food =>
                                     <Grid
-                                        item lg={4} md={4} sm={6} xs={12} key={food.id}>
+                                        item lg={4} md={4} sm={6} xs={12} key={food._id}>
                                         <FoodItem food={food} />
                                     </Grid>
                                 )}

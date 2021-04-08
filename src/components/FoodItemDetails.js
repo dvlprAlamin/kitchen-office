@@ -8,6 +8,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoodDetails } from '../redux/actions/foodAction';
+import { addToCart } from '../redux/actions/cartAction'
 const useStyle = makeStyles({
     root: {
 
@@ -32,14 +33,16 @@ const FoodItemDetails = () => {
     // const { img, name, price, description } = foods.find(food => food.id === +id)
     // const totalPrice = (price * count).toFixed(2)
 
-
+    const [quantity, setQuantity] = useState(1)
     const dispatch = useDispatch()
-    const food = useSelector((state) => state.foods.foodDetails);
+    const getFoodDetails = useSelector((state) => state.foodDetails);
     useEffect(() => {
         dispatch(fetchFoodDetails(id));
     }, [dispatch, id])
-    console.log(food);
-    const { _id, name, img, description, price } = food;
+    console.log(getFoodDetails);
+    const { food, loading, error } = getFoodDetails;
+    // const { name, img, description, price } = food[0];
+    // console.log(food[0]);
     // const updateCart = () => {
     //     const cartData = {
     //         id,
@@ -51,32 +54,39 @@ const FoodItemDetails = () => {
     // setCart(previous => [...previous, cartData]);
     // setCart(cartData);
     // }
+    const addToCartHandler = () => {
+        dispatch(addToCart(id, quantity));
+    }
     return (
         <Container>
-            <Grid container spacing={3}>
-                <Grid className={foodInfo} item lg={6} md={6} sm={12} xs={12}>
-                    <Typography variant="h3">{name}</Typography>
-                    <Typography variant="body1">{description}</Typography>
-                    <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Typography variant="h3">${price}</Typography>
-                        <div className={counterSection}>
-                            {/* <Button onClick={() => setCount(pre => pre > 1 ? pre - 1 : 1)} ><RemoveIcon /></Button> */}
-                            {/* <span style={{ fontSize: 20 }}>{count}</span> */}
-                            {/* <Button onClick={() => setCount(pre => pre + 1)}> <AddIcon color="secondary" /></Button> */}
-                        </div>
-                    </div>
-                    <Link
-                        to='/checkout'
-                        style={{ textDecoration: 'none' }}>
-                        <Button color="secondary" variant="contained">
-                            <ShoppingCartIcon /> Add
+            {loading ? <h1>Loading...</h1> :
+                error ? <h1>{error}</h1> :
+                    <Grid container spacing={3}>
+                        <Grid className={foodInfo} item lg={6} md={6} sm={12} xs={12}>
+                            <Typography variant="h3">{food?.[0].name}</Typography>
+                            <Typography variant="body1">{food?.[0].description}</Typography>
+                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                                <Typography variant="h3">${(food?.[0].price * quantity).toFixed(2)}</Typography>
+                                <div className={counterSection}>
+                                    <Button onClick={() => setQuantity(pre => pre > 1 ? pre - 1 : 1)} ><RemoveIcon /></Button>
+                                    <span style={{ fontSize: 20 }}>{quantity}</span>
+                                    <Button onClick={() => setQuantity(pre => pre + 1)}> <AddIcon color="secondary" /></Button>
+                                </div>
+                            </div>
+                            <Link
+                                to='/checkout'
+                                style={{ textDecoration: 'none' }}>
+                                <Button
+                                    onClick={addToCartHandler}
+                                    color="secondary" variant="contained">
+                                    <ShoppingCartIcon /> Add
                             </Button>
-                    </Link>
-                </Grid>
-                <Grid item lg={6} md={6} sm={12} xs={12}>
-                    <img style={{ width: '100%' }} src={img} alt="" />
-                </Grid>
-            </Grid>
+                            </Link>
+                        </Grid>
+                        <Grid item lg={6} md={6} sm={12} xs={12}>
+                            <img style={{ width: '100%' }} src={food?.[0].img} alt="" />
+                        </Grid>
+                    </Grid>}
         </Container >
     );
 };

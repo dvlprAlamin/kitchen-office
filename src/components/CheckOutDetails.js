@@ -1,6 +1,6 @@
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
 // import React, { useState } from 'react';
-import { GetFood } from '../context/foodContext';
+// import { GetFood } from '../context/foodContext';
 import Counter from './Counter';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -126,13 +126,13 @@ export default function CustomizedDialogs() {
     const handleClose = () => {
         setOpen(false);
     };
-    const { address, cart, foods, count, setCount } = GetFood();
-    console.log(cart);
-    const { name, img, price } = cart;
+    // const { address, cart, foods, count, setCount } = GetFood();
+    // console.log(cart);
+    // const { name, img, price } = cart;
     // const [count, setCount] = useState(cart.quantity)
-    const subTotal = (price * count);
-    const tax = +(subTotal * .1).toFixed(2);
-    const total = (subTotal + tax + 2).toFixed(2);
+    // const subTotal = (price * count);
+    // const tax = +(subTotal * .1).toFixed(2);
+    // const total = (subTotal + tax + 2).toFixed(2);
     return (
         <div >
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -144,7 +144,7 @@ export default function CustomizedDialogs() {
         </DialogTitle> */}
 
 
-                <Typography variant="h5"> From: Cafe Jhotpot</Typography>
+                {/* <Typography variant="h5"> From: Cafe Jhotpot</Typography>
                 <Typography variant="h6"> Arriving in 20-30 minutes</Typography>
                 <Typography variant="body1"> {address.road}</Typography>
                 <Paper elevation={2} style={{ padding: 5, margin: '10px 0' }}>
@@ -187,7 +187,7 @@ export default function CustomizedDialogs() {
                             <td>${total}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> */}
 
 
 

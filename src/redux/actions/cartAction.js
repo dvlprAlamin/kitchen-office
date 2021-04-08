@@ -1,24 +1,22 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "./types";
-
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../constant";
+import axios from "axios";
 
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-        .then(res => res.json())
-        .then(meal =>
-            dispatch({
-                type: ADD_TO_CART,
-                payload: {
-                    id: meal.meals[0].idMeal,
-                    name: meal.meals[0].strMeal,
-                    imgUrl: meal.meals[0].strMealThumb,
-                    price: 50,
-                    quantity
-                },
-            })
-        )
+    const { data } = await axios.get(`http://localhost:4000/food/${id}`);
 
-    localStorage.setItem('cart', JSON.stringify(getState().cart.cartItems))
-}
+    dispatch({
+        type: ADD_TO_CART,
+        payload: {
+            id: data[0]._id,
+            name: data[0].name,
+            img: data[0].img,
+            price: data[0].price,
+            quantity,
+        },
+    });
+
+    localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
+};
 
 export const removeFromCart = (id) => (dispatch, getState) => {
     dispatch({
