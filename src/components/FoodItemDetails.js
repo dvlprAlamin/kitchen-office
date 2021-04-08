@@ -26,18 +26,19 @@ const useStyle = makeStyles({
 const FoodItemDetails = () => {
     const { id } = useParams();
     const { foodInfo, counterSection } = useStyle()
-    const { foods, setCart } = GetFood()
+    const { foods, setCart, count, setCount } = GetFood()
     const { img, name, price, description } = foods.find(food => food.id === +id)
-    const [count, setCount] = useState(1);
     const totalPrice = (price * count).toFixed(2)
     const updateCart = () => {
         const cartData = {
             id,
             quantity: count,
-            total: totalPrice
+            price,
+            img,
+            name
         };
+        // setCart(previous => [...previous, cartData]);
         setCart(cartData);
-        console.log(cartData);
     }
     return (
         <Container>
@@ -48,9 +49,9 @@ const FoodItemDetails = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                         <Typography variant="h3">${totalPrice}</Typography>
                         <div className={counterSection}>
-                            <Button onClick={() => setCount(count > 0 ? count - 1 : 0)} ><RemoveIcon /></Button>
+                            <Button onClick={() => setCount(pre => pre > 1 ? pre - 1 : 1)} ><RemoveIcon /></Button>
                             <span style={{ fontSize: 20 }}>{count}</span>
-                            <Button onClick={() => setCount(count + 1)}> <AddIcon color="secondary" /></Button>
+                            <Button onClick={() => setCount(pre => pre + 1)}> <AddIcon color="secondary" /></Button>
                         </div>
                     </div>
                     <Link

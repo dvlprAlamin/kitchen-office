@@ -69,11 +69,17 @@ export const FoodProvider = ({ children }) => {
 
         }
     ]);
-    const [cart, setCart] = useState({})
+    const [selectedFood, setSelectedFood] = useState(foods.filter(food => food.type === 'breakfast'))
+    const [count, setCount] = useState(1);
+    const [cart, setCart] = useState([])
     const [address, setAddress] = useState({})
     const value = {
         foods,
         setFoods,
+        selectedFood,
+        setSelectedFood,
+        count,
+        setCount,
         cart,
         setCart,
         address,

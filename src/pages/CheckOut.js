@@ -58,11 +58,12 @@ const CheckOut = () => {
                             placeholder="Enter delivery instruction"
                             style={{ marginBottom: 10 }}
                         />
-                        <Button color="secondary" variant="contained">Save and continue</Button>
+                        {/* <Button color="secondary" variant="contained">Save and continue</Button> */}
+                        <CheckOutDetails />
                     </Paper>
                 </Grid>
                 <Grid style={{ marginLeft: 'auto' }} item lg={4} md={4} sm={12} xs={12}>
-                    <CheckOutDetails />
+                    {/* <CheckOutDetails /> */}
                 </Grid>
             </Grid>
         </Container>
