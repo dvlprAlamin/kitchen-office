@@ -20,17 +20,18 @@ const useStyle = makeStyles((theme) => ({
 
     }
 }))
-const FoodItem = ({ id, img, name, price }) => {
+const FoodItem = ({ food }) => {
     const { foodItem, foodItemLink } = useStyle();
+    const { _id, name, price, img, slug } = food;
     return (
         <Paper
             elevation={2}
             className={foodItem}>
-            <Link to={`/food/${id}`} className={foodItemLink}>
+            <Link to={`/food/${_id}`} className={foodItemLink}>
                 <img style={{ width: '100%' }} src={img} alt="" />
-                <Typography variant="h5">{name}</Typography>
-                <Typography variant="body1">How to dream about your future</Typography>
-                <Typography variant="h4">${price}</Typography>
+                <Typography variant="h6">{name}</Typography>
+                <Typography variant="caption">{slug}</Typography>
+                <Typography variant="h5">${price}</Typography>
             </Link>
         </Paper>
     );

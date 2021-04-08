@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import img from '../dinner1.png'
+// import img from '../dinner1.png'
 const FoodContext = createContext();
 
 export const GetFood = () => {
@@ -10,7 +10,7 @@ export const FoodProvider = ({ children }) => {
     const [foods, setFoods] = useState([
         {
             id: 1,
-            img: img,
+            img: '',
             type: 'breakfast',
             name: 'Chicken dinner',
             price: 39.99,
@@ -20,7 +20,7 @@ export const FoodProvider = ({ children }) => {
         },
         {
             id: 2,
-            img: img,
+            img: '',
             type: 'breakfast',
             name: 'Beef dinner',
             price: 59.99,
@@ -30,7 +30,7 @@ export const FoodProvider = ({ children }) => {
         },
         {
             id: 3,
-            img: img,
+            img: '',
             type: 'breakfast',
             name: 'Mutton dinner',
             price: 79.99,
@@ -40,7 +40,7 @@ export const FoodProvider = ({ children }) => {
         },
         {
             id: 4,
-            img: img,
+            img: '',
             type: 'lunch',
             name: 'Chicken dinner',
             price: 39.99,
@@ -50,7 +50,7 @@ export const FoodProvider = ({ children }) => {
         },
         {
             id: 5,
-            img: img,
+            img: '',
             type: 'lunch',
             name: 'Beef dinner',
             price: 59.99,
@@ -60,7 +60,7 @@ export const FoodProvider = ({ children }) => {
         },
         {
             id: 6,
-            img: img,
+            img: '',
             type: 'dinner',
             name: 'Mutton dinner',
             price: 79.99,
