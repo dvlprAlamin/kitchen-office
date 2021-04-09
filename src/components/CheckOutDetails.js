@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography } from '@material-ui/core';
+import { Button, Container, Grid, Paper, Typography } from '@material-ui/core';
 // import React, { useState } from 'react';
 // import { GetFood } from '../context/foodContext';
 import Counter from './Counter';
@@ -66,7 +66,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 // };
 
 // export default CheckOutDetails;
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 // import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -75,6 +75,9 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../redux/actions/cartAction';
+import { Delete } from '@material-ui/icons';
 // import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
@@ -117,15 +120,17 @@ const DialogActions = withStyles((theme) => ({
     },
 }))(MuiDialogActions);
 
-export default function CustomizedDialogs() {
-    const [open, setOpen] = React.useState(false);
+export default function CustomizedDialogs({ open, handleClose }) {
+    // const [open, setOpen] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
+
+
     // const { address, cart, foods, count, setCount } = GetFood();
     // console.log(cart);
     // const { name, img, price } = cart;
@@ -133,42 +138,68 @@ export default function CustomizedDialogs() {
     // const subTotal = (price * count);
     // const tax = +(subTotal * .1).toFixed(2);
     // const total = (subTotal + tax + 2).toFixed(2);
+
+    const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cart.cartItems)
+    // useEffect(()=>{
+    //     dispatch()
+    // },[dispatch])
+    const quantityHandler = (id, quantity) => {
+        dispatch(addToCart(id, quantity))
+        // console.log(id, quantity);
+    }
+    // console.log(cartItems);
+
+    const removeFromCartHandler = (id) => {
+        dispatch(removeFromCart(id));
+    };
     return (
         <div >
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Save and continue</Button>
+            {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                Save and continue</Button> */}
 
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+            <Dialog
+                onClose={handleClose}
+                aria-labelledby="Cart Items" open={open}>
                 {/* <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     Modal title
         </DialogTitle> */}
 
 
-                {/* <Typography variant="h5"> From: Cafe Jhotpot</Typography>
-                <Typography variant="h6"> Arriving in 20-30 minutes</Typography>
-                <Typography variant="body1"> {address.road}</Typography>
-                <Paper elevation={2} style={{ padding: 5, margin: '10px 0' }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={3}>
-                            <img width='100%' src={img} alt="" />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Typography variant="body1">{name}</Typography>
-                            <Typography variant="h6" color="secondary">{subTotal}</Typography>
-                            <Typography variant="caption" color="textSecondary">Delivery free</Typography>
-                        </Grid>
-                        <Grid item xs={5} style={{ fontSize: 18, margin: 'auto' }}>
-                            <Button onClick={() => setCount(pre => pre > 1 ? pre - 1 : 1)} >
-                                <RemoveIcon />
-                            </Button>
-                            <span>{count}</span>
-                            <Button onClick={() => setCount(pre => pre + 1)}>
-                                <AddIcon color="secondary" />
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Paper>
-                <table cellPadding="5" cellSpacing="5">
+                {/* <Typography variant="h5"> From: Cafe Jhotpot</Typography> */}
+                {/* <Typography variant="h6"> Arriving in 20-30 minutes</Typography> */}
+                {/* <Typography variant="body1"> {address.road}</Typography> */}
+                {
+                    cartItems.map(item =>
+                        <Container key={item.id}>
+                            <Paper elevation={2} style={{ padding: 10, marginTop: 25 }}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={3}>
+                                        <img width='100%' src={item.img} alt="" />
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <Typography variant="body1">{item.name}</Typography>
+                                        <Typography variant="h6" color="secondary">{item.price * item.quantity}</Typography>
+                                        <Typography variant="caption" color="textSecondary">Delivery free</Typography>
+                                    </Grid>
+                                    <Grid item xs={4} style={{ fontSize: 18, margin: 'auto' }}>
+                                        <Button onClick={() => quantityHandler(item.id, item.quantity > 1 ? item.quantity - 1 : 1)} >
+                                            <RemoveIcon />
+                                        </Button>
+                                        <span>{item.quantity}</span>
+                                        <Button onClick={() => quantityHandler(item.id, item.quantity + 1)}>
+                                            <AddIcon color="secondary" />
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={2} style={{ margin: 'auto' }}>
+                                        <Button onClick={() => removeFromCartHandler(item.id)}>
+                                            <Delete color="secondary" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Container>)}
+                {/* <table cellPadding="5" cellSpacing="5">
                     <tbody align="left">
                         <tr>
                             <th>SubTotal: {count} item</th>
@@ -193,7 +224,12 @@ export default function CustomizedDialogs() {
 
 
                 <DialogActions>
-                    <Button color="secondary" variant="contained">Place Order</Button>
+                    {
+                        cartItems.length > 0 ? <Button style={{ margin: '10px auto' }} color="secondary" variant="contained">Place Order</Button> :
+                            <div style={{ minHeight: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center' }}>
+                                <Typography variant="h2">Your cart is empty</Typography>
+                                <Button autoFocus onClick={handleClose} color="primary" variant="contained">Close</Button></div>
+                    }
                     {/* <Button autoFocus onClick={handleClose} color="primary">Save changes</Button> */}
                 </DialogActions>
             </Dialog>
