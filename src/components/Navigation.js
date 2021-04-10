@@ -124,7 +124,7 @@ const Navigation = ({ window, handleClickOpen }) => {
     const { root, appBar, menuButton, drawerPaper, navbar, navItem, linkItem, cart, link, navItemM, } = useStyles()
 
     const cartItems = useSelector(state => state.cart.cartItems)
-    const totalQuantity = cartItems.reduce((qty, item) => qty + item.quantity, 0)
+    const totalQuantity = cartItems.reduce((qty, item) => qty + item.quantity, 0) || 0
 
     const { loggedInUser, logOut } = useAuth();
     const logOutHandler = async e => {

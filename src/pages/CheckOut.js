@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import CheckOutDetails from '../components/CheckOutDetails';
 import { useAuth } from '../context/authContext';
+import { resetCart } from '../redux/actions/cartAction';
 // import { GetFood } from '../context/foodContext';
 
 const CheckOut = () => {
@@ -21,6 +22,7 @@ const CheckOut = () => {
     // console.log(cartItems);
 
     // console.log(orderData);
+    const dispatch = useDispatch()
     const orderPlaceHandler = async e => {
         e.preventDefault();
         const orderData = {
@@ -30,12 +32,14 @@ const CheckOut = () => {
         }
         try {
             const response = await axios.post('https://fathomless-thicket-96415.herokuapp.com/order', orderData)
-            response && history.push('/orders')
+            if (response) {
+                history.push('/orders')
+                dispatch(resetCart());
+            }
         } catch (error) {
 
         }
     }
-    // const dispatch = useDispatch()
     // useEffect(()=> {
     //     dispatch()
     // },[])

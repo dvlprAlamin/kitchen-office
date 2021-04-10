@@ -21,7 +21,10 @@ const Orders = () => {
     // console.log(orderData);
     return (
         <Container style={{ minHeight: '95vh' }}>
-            {/* <Typography variant="h3">Hello, {name} your have {quantity} orders</Typography> */}
+            {currentUserOrders.length === 0 &&
+                <div style={{ display: 'flex', height: "90vh", justifyContent: 'center', alignItems: 'center' }}>
+                    <Typography variant="h3" >You didn't place any order yet.</Typography>
+                </div>}
             {loading ? <Loader /> : error ? <h1>{error}</h1> :
                 currentUserOrders?.[currentUserOrders.length - 1]?.orderedItems?.map(item =>
                     <Container key={item.id}>
