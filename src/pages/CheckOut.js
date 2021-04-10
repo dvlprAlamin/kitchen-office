@@ -1,13 +1,15 @@
 import { Button, Container, Grid, Paper, TextField, Typography } from '@material-ui/core';
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import CheckOutDetails from '../components/CheckOutDetails';
 import { useAuth } from '../context/authContext';
 // import { GetFood } from '../context/foodContext';
 
 const CheckOut = () => {
     const { loggedInUser } = useAuth();
+    const history = useHistory()
     const [address, setAddress] = useState({});
     const blurHandler = e => {
         const deliveryDetails = { ...address }
@@ -27,12 +29,18 @@ const CheckOut = () => {
             orderedItems: cartItems
         }
         try {
-            const response = await axios.post('http://localhost:4000/order', orderData)
-            console.log(response);
+            const response = await axios.post('https://fathomless-thicket-96415.herokuapp.com/order', orderData)
+            response && history.push('/orders')
         } catch (error) {
 
         }
     }
+    // const dispatch = useDispatch()
+    // useEffect(()=> {
+    //     dispatch()
+    // },[])
+    // const getUserInfo = useSelector((state) => state.orders);
+    // console.log(getUserInfo);
     return (
         <Container style={{ padding: '60px 20px' }}>
             <Grid container spacing={4}>
@@ -49,6 +57,7 @@ const CheckOut = () => {
                                 label="Road No"
                                 name="road"
                                 placeholder="Enter road no"
+                                // defaultValue={getUserInfo?.road}
                                 style={{ marginBottom: 10 }}
                             />
                             <TextField

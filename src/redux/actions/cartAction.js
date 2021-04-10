@@ -2,7 +2,7 @@ import { ADD_TO_CART, REMOVE_FROM_CART } from "../constant";
 import axios from "axios";
 
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
-    const { data } = await axios.get(`http://localhost:4000/food/${id}`);
+    const { data } = await axios.get(`https://fathomless-thicket-96415.herokuapp.com/food/${id}`);
 
     dispatch({
         type: ADD_TO_CART,

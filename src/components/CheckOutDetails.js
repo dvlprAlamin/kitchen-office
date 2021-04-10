@@ -206,26 +206,27 @@ export default function CustomizedDialogs({ open, handleClose }) {
                                 </Grid>
                             </Paper>
                         </Container>)}
-                <table cellPadding="5" cellSpacing="5">
-                    <tbody align="left">
-                        <tr>
-                            <th>SubTotal: {totalQuantity} item</th>
-                            <td>${subtotal}</td>
-                        </tr>
-                        <tr>
-                            <th>Tax</th>
-                            <td>${tax}</td>
-                        </tr>
-                        <tr>
-                            <th>Delivery fee</th>
-                            <td>$2.00</td>
-                        </tr>
-                        <tr>
-                            <th>Total</th>
-                            <td>${total}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {cartItems.length > 0 &&
+                    <table cellPadding="5" cellSpacing="5">
+                        <tbody align="left">
+                            <tr>
+                                <th>SubTotal: {totalQuantity} item</th>
+                                <td>${subtotal}</td>
+                            </tr>
+                            <tr>
+                                <th>Tax</th>
+                                <td>${tax}</td>
+                            </tr>
+                            <tr>
+                                <th>Delivery fee</th>
+                                <td>$2.00</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>${total}</td>
+                            </tr>
+                        </tbody>
+                    </table>}
 
 
                 {

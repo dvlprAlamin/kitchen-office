@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 const useStyle = makeStyles(theme => ({
     root: {
         backgroundColor: '#333',
-        paddingTop: 10,
     },
     linkItem: {
         color: '#fff',
@@ -21,7 +20,7 @@ const Footer = () => {
     return (
         <div className={root}>
             <Container>
-                <Grid container>
+                <Grid container style={{ padding: '50px 0' }}>
                     <Grid item md={6}>
                         <img style={{ maxWidth: '100%' }} src={logo} alt="" />
                     </Grid>

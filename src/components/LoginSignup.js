@@ -88,7 +88,7 @@ export default function LoginSignUp() {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <Paper style={{ padding: 15 }}>
+            <Paper style={{ padding: 15, margin: '40px auto' }}>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
                     </Avatar>
@@ -189,7 +189,8 @@ export default function LoginSignUp() {
                         <span>Don't have an account? <Link to="/signup">
                             Sign Up
             </Link></span>}
-                    <Button onClick={googleSignInHandler} variant="contained">Continue with Google</Button>
+                    <Typography variant="h5">or</Typography>
+                    <Button style={{ marginTop: 10 }} onClick={googleSignInHandler} variant="contained">Continue with Google</Button>
                     {/* <SignUpWithOthers /> */}
                 </div>
             </Paper>

@@ -4,7 +4,7 @@ import * as types from '../constant'
 export const fetchFoods = () => async dispatch => {
     try {
         dispatch({ type: types.GET_FOODS_REQUEST })
-        const { data } = await axios.get('http://localhost:4000/foods')
+        const { data } = await axios.get('https://fathomless-thicket-96415.herokuapp.com/foods')
         dispatch({
             type: types.GET_FOODS_SUCCESS,
             payload: data
@@ -16,7 +16,7 @@ export const fetchFoods = () => async dispatch => {
         })
     }
 
-    // fetch('http://localhost:4000/foods')
+    // fetch('https://fathomless-thicket-96415.herokuapp.com/foods')
     //     .then(res => res.json())
     //     .then(foods =>
     //         dispatch({
@@ -30,7 +30,7 @@ export const fetchFoodsByCategory = category => async dispatch => {
     try {
         dispatch({ type: types.GET_FOODS_BY_CATEGORY_REQUEST })
         console.log(category);
-        const { data } = await axios.get(`http://localhost:4000/foods/${category}`)
+        const { data } = await axios.get(`https://fathomless-thicket-96415.herokuapp.com/foods/${category}`)
         console.log(data);
         dispatch({
             type: types.GET_FOODS_BY_CATEGORY_SUCCESS,
@@ -46,7 +46,7 @@ export const fetchFoodsByCategory = category => async dispatch => {
 export const fetchFoodDetails = id => async dispatch => {
     try {
         dispatch({ type: types.GET_FOOD_DETAILS_REQUEST })
-        const { data } = await axios.get(`http://localhost:4000/food/${id}`)
+        const { data } = await axios.get(`https://fathomless-thicket-96415.herokuapp.com/food/${id}`)
         dispatch({
             type: types.GET_FOOD_DETAILS_SUCCESS,
             payload: data
