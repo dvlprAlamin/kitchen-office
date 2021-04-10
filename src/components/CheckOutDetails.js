@@ -40,26 +40,26 @@ import RemoveIcon from '@material-ui/icons/Remove';
 //             </Grid>
 //         </Grid>
 //     </Paper>
-//     <table cellPadding="5" cellSpacing="5">
-//         <tbody align="left">
-//             <tr>
-//                 <th>SubTotal: {count} item</th>
-//                 <td>${subTotal}</td>
-//             </tr>
-//             <tr>
-//                 <th>Tax</th>
-//                 <td>${tax}</td>
-//             </tr>
-//             <tr>
-//                 <th>Delivery fee</th>
-//                 <td>$2</td>
-//             </tr>
-//             <tr>
-//                 <th>Total</th>
-//                 <td>${total}</td>
-//             </tr>
-//         </tbody>
-//     </table>
+// <table cellPadding="5" cellSpacing="5">
+//     <tbody align="left">
+//         <tr>
+//             <th>SubTotal: {count} item</th>
+//             <td>${subTotal}</td>
+//         </tr>
+//         <tr>
+//             <th>Tax</th>
+//             <td>${tax}</td>
+//         </tr>
+//         <tr>
+//             <th>Delivery fee</th>
+//             <td>$2</td>
+//         </tr>
+//         <tr>
+//             <th>Total</th>
+//             <td>${total}</td>
+//         </tr>
+//     </tbody>
+// </table>
 //     <Button color="secondary" variant="contained">Place Order</Button>
 // </>
 //     );
@@ -80,38 +80,38 @@ import { addToCart, removeFromCart } from '../redux/actions/cartAction';
 import { Delete } from '@material-ui/icons';
 // import Typography from '@material-ui/core/Typography';
 
-const styles = (theme) => ({
-    root: {
-        margin: 0,
-        padding: theme.spacing(2),
-    },
-    closeButton: {
-        position: 'absolute',
-        right: theme.spacing(1),
-        top: theme.spacing(1),
-        color: theme.palette.grey[500],
-    },
-});
+// const styles = (theme) => ({
+//     root: {
+//         margin: 0,
+//         padding: theme.spacing(2),
+//     },
+//     closeButton: {
+//         position: 'absolute',
+//         right: theme.spacing(1),
+//         top: theme.spacing(1),
+//         color: theme.palette.grey[500],
+//     },
+// });
 
-const DialogTitle = withStyles(styles)((props) => {
-    const { children, classes, onClose, ...other } = props;
-    return (
-        <MuiDialogTitle disableTypography className={classes.root} {...other}>
-            <Typography variant="h6">{children}</Typography>
-            {onClose ? (
-                <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-                    <CloseIcon />
-                </IconButton>
-            ) : null}
-        </MuiDialogTitle>
-    );
-});
+// const DialogTitle = withStyles(styles)((props) => {
+//     const { children, classes, onClose, ...other } = props;
+//     return (
+//         <MuiDialogTitle disableTypography className={classes.root} {...other}>
+//             <Typography variant="h6">{children}</Typography>
+//             {onClose ? (
+//                 <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+//                     <CloseIcon />
+//                 </IconButton>
+//             ) : null}
+//         </MuiDialogTitle>
+//     );
+// });
 
-const DialogContent = withStyles((theme) => ({
-    root: {
-        padding: theme.spacing(2),
-    },
-}))(MuiDialogContent);
+// const DialogContent = withStyles((theme) => ({
+//     root: {
+//         padding: theme.spacing(2),
+//     },
+// }))(MuiDialogContent);
 
 const DialogActions = withStyles((theme) => ({
     root: {
@@ -141,6 +141,13 @@ export default function CustomizedDialogs({ open, handleClose }) {
 
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.cartItems)
+    const totalQuantity = cartItems.reduce((qty, item) => qty + item.quantity, 0)
+    const getTotal = () => {
+        return cartItems.reduce((price, item) => price + (item.quantity * +item.price), 0)
+    }
+    const subtotal = getTotal().toFixed(2)
+    const tax = (getTotal() * .1).toFixed(2)
+    const total = ((+subtotal) + (+tax) + 2).toFixed(2)
     // useEffect(()=>{
     //     dispatch()
     // },[dispatch])
@@ -199,11 +206,11 @@ export default function CustomizedDialogs({ open, handleClose }) {
                                 </Grid>
                             </Paper>
                         </Container>)}
-                {/* <table cellPadding="5" cellSpacing="5">
+                <table cellPadding="5" cellSpacing="5">
                     <tbody align="left">
                         <tr>
-                            <th>SubTotal: {count} item</th>
-                            <td>${subTotal}</td>
+                            <th>SubTotal: {totalQuantity} item</th>
+                            <td>${subtotal}</td>
                         </tr>
                         <tr>
                             <th>Tax</th>
@@ -211,26 +218,26 @@ export default function CustomizedDialogs({ open, handleClose }) {
                         </tr>
                         <tr>
                             <th>Delivery fee</th>
-                            <td>$2</td>
+                            <td>$2.00</td>
                         </tr>
                         <tr>
                             <th>Total</th>
                             <td>${total}</td>
                         </tr>
                     </tbody>
-                </table> */}
+                </table>
 
 
-
-
+                {
+                    cartItems.length === 0 &&
+                    <div style={{ minHeight: '50vh', margin: 30 }}>
+                        <Typography variant="h4">Your cart is empty</Typography>
+                    </div>
+                }
                 <DialogActions>
-                    {
-                        cartItems.length > 0 ? <Button style={{ margin: '10px auto' }} color="secondary" variant="contained">Place Order</Button> :
-                            <div style={{ minHeight: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center' }}>
-                                <Typography variant="h2">Your cart is empty</Typography>
-                                <Button autoFocus onClick={handleClose} color="primary" variant="contained">Close</Button></div>
-                    }
-                    {/* <Button autoFocus onClick={handleClose} color="primary">Save changes</Button> */}
+
+                    <Button style={{ margin: 'auto' }} onClick={handleClose} color="primary" variant="contained">Close</Button>
+
                 </DialogActions>
             </Dialog>
         </div>

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { cartReducer } from './cartReducer';
-import { foodReducer, foodByCategoryReducer, foodDetailsReducer } from './foodReducer'
+import { foodReducer, foodByCategoryReducer, foodDetailsReducer } from './foodReducer';
+
 export default combineReducers({
     foods: foodReducer,
     foodDetails: foodDetailsReducer,

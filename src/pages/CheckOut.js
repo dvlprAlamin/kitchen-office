@@ -1,9 +1,13 @@
 import { Button, Container, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import CheckOutDetails from '../components/CheckOutDetails';
+import { useAuth } from '../context/authContext';
 // import { GetFood } from '../context/foodContext';
 
-const CheckOut = ({ handleClickOpen, handleClose, open }) => {
+const CheckOut = () => {
+    const { loggedInUser } = useAuth();
     const [address, setAddress] = useState({});
     const blurHandler = e => {
         const deliveryDetails = { ...address }
@@ -11,18 +15,32 @@ const CheckOut = ({ handleClickOpen, handleClose, open }) => {
         setAddress(deliveryDetails)
     }
 
-    // console.log(address);
-    const deliveryAddressHandler = () => {
+    const cartItems = useSelector(state => state.cart.cartItems)
+    // console.log(cartItems);
 
+    // console.log(orderData);
+    const orderPlaceHandler = async e => {
+        e.preventDefault();
+        const orderData = {
+            email: loggedInUser.email,
+            userInfo: { ...address },
+            orderedItems: cartItems
+        }
+        try {
+            const response = await axios.post('http://localhost:4000/order', orderData)
+            console.log(response);
+        } catch (error) {
+
+        }
     }
     return (
-        <Container>
+        <Container style={{ padding: '60px 20px' }}>
             <Grid container spacing={4}>
                 <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Paper style={{ padding: 20 }} elevation={2}>
                         <Typography variant="h4">Edit delivery details</Typography>
                         <Typography variant="h6" style={{ lineHeight: 4 }}>Delivery to door</Typography>
-                        <form action="">
+                        <form onSubmit={orderPlaceHandler}>
                             <TextField
                                 fullWidth
                                 onBlur={blurHandler}
@@ -48,9 +66,9 @@ const CheckOut = ({ handleClickOpen, handleClose, open }) => {
                                 onBlur={blurHandler}
                                 required
                                 variant="outlined"
-                                label="Business Name"
+                                label="Name"
                                 name="name"
-                                placeholder="Enter business name"
+                                placeholder="Enter name"
                                 style={{ marginBottom: 10 }}
                             />
                             <TextField
@@ -64,14 +82,9 @@ const CheckOut = ({ handleClickOpen, handleClose, open }) => {
                             />
                             <Button
                                 type="submit"
-                                onClick={handleClickOpen}
                                 color="secondary"
-                                variant="contained">Save and continue</Button>
+                                variant="contained">Place Order</Button>
                         </form>
-                        <CheckOutDetails
-                            open={open}
-                            handleClose={handleClose}
-                        />
                     </Paper>
                 </Grid>
                 <Grid style={{ marginLeft: 'auto' }} item lg={4} md={4} sm={12} xs={12}>

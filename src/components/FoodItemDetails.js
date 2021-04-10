@@ -1,6 +1,6 @@
 import { Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { GetFood } from '../context/foodContext';
+// import { GetFood } from '../context/authContext';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useParams } from 'react-router';
 import AddIcon from '@material-ui/icons/Add';
@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoodDetails } from '../redux/actions/foodAction';
 import { addToCart } from '../redux/actions/cartAction'
+import Loader from './Loader';
 const useStyle = makeStyles({
     root: {
 
@@ -58,8 +59,8 @@ const FoodItemDetails = () => {
         dispatch(addToCart(id, quantity));
     }
     return (
-        <Container>
-            {loading ? <h1>Loading...</h1> :
+        <Container style={{ minHeight: '100vh' }}>
+            {loading ? <Loader /> :
                 error ? <h1>{error}</h1> :
                     <Grid container spacing={3}>
                         <Grid className={foodInfo} item lg={6} md={6} sm={12} xs={12}>
@@ -77,6 +78,7 @@ const FoodItemDetails = () => {
                                 to='/checkout'
                                 style={{ textDecoration: 'none' }}>
                                 <Button
+                                    size="large"
                                     onClick={addToCartHandler}
                                     color="secondary" variant="contained">
                                     <ShoppingCartIcon /> Add

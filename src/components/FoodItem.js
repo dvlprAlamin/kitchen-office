@@ -25,7 +25,7 @@ const FoodItem = ({ food }) => {
     const { _id, name, price, img, slug } = food;
     return (
         <Paper
-            elevation={2}
+            elevation={4}
             className={foodItem}>
             <Link to={`/food/${_id}`} className={foodItemLink}>
                 <img style={{ width: '100%' }} src={img} alt="" />
