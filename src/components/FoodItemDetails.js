@@ -1,6 +1,5 @@
 import { Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-// import { GetFood } from '../context/authContext';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useParams } from 'react-router';
 import AddIcon from '@material-ui/icons/Add';
@@ -30,10 +29,6 @@ const useStyle = makeStyles({
 const FoodItemDetails = () => {
     const { id } = useParams();
     const { foodInfo, counterSection } = useStyle()
-    // const { foods, setCart, count, setCount } = GetFood()
-    // const { img, name, price, description } = foods.find(food => food.id === +id)
-    // const totalPrice = (price * count).toFixed(2)
-
     const [quantity, setQuantity] = useState(1)
     const dispatch = useDispatch()
     const getFoodDetails = useSelector((state) => state.foodDetails);
@@ -42,19 +37,6 @@ const FoodItemDetails = () => {
     }, [dispatch, id])
     console.log(getFoodDetails);
     const { food, loading, error } = getFoodDetails;
-    // const { name, img, description, price } = food[0];
-    // console.log(food[0]);
-    // const updateCart = () => {
-    //     const cartData = {
-    //         id,
-    //         quantity: count,
-    //         price,
-    //         img,
-    //         name
-    //     };
-    // setCart(previous => [...previous, cartData]);
-    // setCart(cartData);
-    // }
     const addToCartHandler = () => {
         dispatch(addToCart(id, quantity));
     }

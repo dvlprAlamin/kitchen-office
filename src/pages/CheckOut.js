@@ -1,12 +1,10 @@
 import { Button, Container, Grid, Paper, TextField, Typography } from '@material-ui/core';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import CheckOutDetails from '../components/CheckOutDetails';
 import { useAuth } from '../context/authContext';
 import { resetCart } from '../redux/actions/cartAction';
-// import { GetFood } from '../context/foodContext';
 
 const CheckOut = () => {
     const { loggedInUser } = useAuth();
@@ -19,9 +17,6 @@ const CheckOut = () => {
     }
 
     const cartItems = useSelector(state => state.cart.cartItems)
-    // console.log(cartItems);
-
-    // console.log(orderData);
     const dispatch = useDispatch()
     const orderPlaceHandler = async e => {
         e.preventDefault();
@@ -40,11 +35,6 @@ const CheckOut = () => {
 
         }
     }
-    // useEffect(()=> {
-    //     dispatch()
-    // },[])
-    // const getUserInfo = useSelector((state) => state.orders);
-    // console.log(getUserInfo);
     return (
         <Container style={{ padding: '60px 20px' }}>
             <Grid container spacing={4}>
@@ -61,7 +51,6 @@ const CheckOut = () => {
                                 label="Road No"
                                 name="road"
                                 placeholder="Enter road no"
-                                // defaultValue={getUserInfo?.road}
                                 style={{ marginBottom: 10 }}
                             />
                             <TextField

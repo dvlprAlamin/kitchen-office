@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Container, Grid, makeStyles } from '@material-ui/core';
+import { Button, Container, Grid, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Banner from '../components/Banner';

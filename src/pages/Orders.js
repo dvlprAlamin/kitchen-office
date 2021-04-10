@@ -1,24 +1,20 @@
 import { Container, Grid, Paper, Typography } from '@material-ui/core';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import { useAuth } from '../context/authContext';
 import { fetchOrders } from '../redux/actions/ordersAction';
 
 const Orders = () => {
-    // const [orderData, setOrderData] = useState({})
     const { loggedInUser } = useAuth();
     const dispatch = useDispatch()
     const getOrders = useSelector((state) => state.orders);
 
     const { currentUserOrders, loading, error } = getOrders;
     console.log(currentUserOrders);
-    // const [category, setCategory] = useState('Breakfast');
     useEffect(() => {
         dispatch(fetchOrders(loggedInUser.email));
     }, [dispatch, loggedInUser.email])
-    // console.log(orderData);
     return (
         <Container style={{ minHeight: '95vh' }}>
             {currentUserOrders.length === 0 &&

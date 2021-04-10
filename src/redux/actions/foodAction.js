@@ -1,6 +1,5 @@
 import axios from 'axios'
 import * as types from '../constant'
-// GET_FOODS_REQUEST, GET_FOODS_SUCCESS,GET_FOODS_FAIL
 export const fetchFoods = () => async dispatch => {
     try {
         dispatch({ type: types.GET_FOODS_REQUEST })
@@ -15,15 +14,6 @@ export const fetchFoods = () => async dispatch => {
             payload: error.message
         })
     }
-
-    // fetch('https://fathomless-thicket-96415.herokuapp.com/foods')
-    //     .then(res => res.json())
-    //     .then(foods =>
-    //         dispatch({
-    //             type: FETCH_FOODS,
-    //             payload: foods
-    //         })
-    //     )
 }
 
 export const fetchFoodsByCategory = category => async dispatch => {

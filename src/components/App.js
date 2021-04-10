@@ -32,9 +32,6 @@ const App = () => {
           <Route path='/food/:id' component={FoodItemDetails} />
           <Route path='/login' component={LoginSignUp} />
           <Route path='/signup' component={LoginSignUp} />
-          {/* <Route path='/checkout'>
-            <CheckOut handleClickOpen={handleClickOpen} />
-          </Route> */}
           <PrivateRoute path='/checkout'>
             <CheckOut handleClickOpen={handleClickOpen} />
           </PrivateRoute>
